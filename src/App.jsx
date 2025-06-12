@@ -87,7 +87,7 @@ function App() {
           }}
         >
           <img
-            src="../src/assets/me.jpeg"
+            src={`${import.meta.env.BASE_URL}/me.jpeg`}
             alt="myself"
             className="w-full h-full object-cover pixelated object-[50%_80%]"
           />
