@@ -1,0 +1,92 @@
+/* Framework imports */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "tailwindcss";
+
+/* Custom variants */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Theme variables */
+@theme {
+  --color-retro-light: #ece6c2;
+  --color-retro-dark: #1e1e1e;
+  --color-retro-brown: #6f5643;
+  --color-retro-orange: #cc6b49;
+  --color-retro-gold: #d2a24c;
+  --color-retro-mint: #73bda8;
+}
+
+/* Base element styles */
+html,
+body {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "VT323", monospace;
+  scroll-snap-type: y mandatory;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+.font-pixel {
+  font-family: "Press Start 2P", monospace;
+}
+
+/* Layout elements */
+section {
+  scroll-snap-align: start;
+}
+
+/* Utility classes */
+.pixelated {
+  image-rendering: pixelated;
+}
+
+/* Animations and effects */
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 2px #fff, 0 0 4px #ff0, 0 0 6px #ff9900;
+  }
+  50% {
+    box-shadow: 0 0 4px #fff, 0 0 8px #ff0, 0 0 12px #ff9900;
+  }
+}
+
+.hover\\:shadow-retro-glow:hover {
+  animation: glow 1.2s ease-in-out infinite;
+}
+
+/* Dark mode and visual effects */
+body.dark::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.1;
+}
+
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
