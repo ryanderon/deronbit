@@ -60,56 +60,72 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-300 bg-paper-cream text-paper-ink dark:bg-paper-dark dark:text-paper-white relative">
+    <div className="min-h-screen transition-colors duration-500 bg-zen-cream text-zen-ink dark:bg-zen-charcoal dark:text-zen-white relative overflow-x-hidden">
       <button
         onClick={toggleTheme}
-        className={`fixed top-6 right-6 z-50 px-4 py-2 text-xl font-handwritten rounded-lg paper-shadow hover:paper-shadow-lg transition-all duration-300 ${
-          dark ? "bg-paper-tan text-paper-ink" : "bg-paper-white text-paper-ink border-2 border-paper-brown"
+        className={`fixed top-8 right-8 z-50 px-5 py-2 text-sm font-zen-serif tracking-wider rounded-sm zen-shadow-md hover:zen-shadow-lg transition-all duration-500 border ${
+          dark 
+            ? "bg-zen-ink text-zen-cream border-zen-gold border-opacity-30" 
+            : "bg-zen-white text-zen-ink border-zen-stone border-opacity-20"
         }`}
         aria-label="Toggle theme"
         title="Toggle theme"
       >
-        {dark ? "☀️ Light" : "🌙 Dark"}
+        {dark ? "☀ 昼" : "☾ 夜"}
       </button>
 
       <section className="h-screen flex flex-col items-center justify-center p-6 relative">
-        <div className="absolute inset-0 opacity-5 dark:opacity-10 pointer-events-none">
-          <svg width="100%" height="100%">
-            <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="currentColor" />
-            </pattern>
-            <rect width="100%" height="100%" fill="url(#dots)" />
+        {/* Zen circle decoration */}
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 opacity-[0.02] dark:opacity-[0.04] pointer-events-none">
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="0.5" 
+                    strokeDasharray="283" strokeDashoffset="30" transform="rotate(-90 50 50)" />
           </svg>
         </div>
 
         <motion.div
-          className="w-64 h-64 mb-8 overflow-hidden paper-shadow-lg paper-texture rounded-sm relative paper-float"
-          initial={{ scale: 0.8, opacity: 0, rotate: -5 }}
-          animate={{ scale: 1, opacity: 1, rotate: 2 }}
-          whileHover={{ scale: 1.05, rotate: 0 }}
-          whileTap={{ scale: 0.95, rotate: -2 }}
+          className="mb-12 relative enso-circle zen-float"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{
-            duration: 0.6,
-            ease: [0.25, 0.1, 0.25, 1],
+            duration: 1,
+            ease: [0.4, 0, 0.2, 1],
           }}
         >
-          <img
-            src={`${import.meta.env.BASE_URL}/me.jpeg`}
-            alt="myself"
-            className="w-full h-full object-cover object-[50%_80%]"
-          />
-          <div className="absolute inset-0 border-8 border-paper-white dark:border-paper-tan pointer-events-none"></div>
+          <motion.div
+            className="w-72 h-72 overflow-hidden zen-shadow-lg washi-texture relative"
+            style={{ 
+              clipPath: "polygon(10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%, 0% 10%)" 
+            }}
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.5 }}
+          >
+            <img
+              src={`${import.meta.env.BASE_URL}/me.jpeg`}
+              alt="myself"
+              className="w-full h-full object-cover object-[50%_80%] grayscale-[20%] contrast-[1.05]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-zen-white/5 to-transparent pointer-events-none"></div>
+          </motion.div>
         </motion.div>
 
-        <div className="text-center max-w-xl">
-          <h3 className="text-4xl font-handwritten mb-3 text-paper-ink dark:text-paper-cream">
-            Hi, I'm Ryan
-          </h3>
-          <p className="text-2xl font-sketch text-paper-brown dark:text-paper-tan">
-            A Frontend Engineer
+        <motion.div 
+          className="text-center max-w-2xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <h1 className="text-5xl font-zen-serif mb-4 text-zen-ink dark:text-zen-cream tracking-wide">
+            Ryan
+          </h1>
+          <div className="bamboo-divider w-24 mx-auto my-6 text-zen-stone dark:text-zen-sage"></div>
+          <p className="text-xl font-zen-mincho text-zen-stone dark:text-zen-sage tracking-wider">
+            Frontend Engineer
           </p>
-          <div className="mt-4 w-32 h-1 bg-paper-brown dark:bg-paper-tan mx-auto opacity-40" style={{ transform: 'rotate(-1deg)' }}></div>
-        </div>
+          <p className="text-sm mt-4 text-zen-sage dark:text-zen-stone opacity-60 tracking-widest">
+            フロントエンドエンジニア
+          </p>
+        </motion.div>
       </section>
 
       <section
@@ -119,102 +135,142 @@ function App() {
           color: themePalette.text,
         }}
       >
-        <div className="flex gap-3 mb-8">
+        {/* Progress indicators */}
+        <div className="flex gap-4 mb-12">
           {jobHistory.map((_, i) => (
-            <div
+            <motion.div
               key={i}
-              className="w-3 h-3 rounded-full border-2 transition-all duration-300 cursor-pointer hover:scale-125"
-              style={{
-                backgroundColor:
-                  i <= index ? themePalette.accent : "transparent",
-                borderColor: themePalette.text,
-                boxShadow: i === index ? `0 0 0 3px ${themePalette.accent}40` : "none",
-              }}
+              className="relative cursor-pointer"
               onClick={() => setIndex(i)}
-              aria-label={`Select job ${i + 1}`}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
               role="button"
               tabIndex={0}
+              aria-label={`Select job ${i + 1}`}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   setIndex(i);
                 }
               }}
-            />
+            >
+              <div
+                className="w-2 h-2 rounded-full transition-all duration-500"
+                style={{
+                  backgroundColor: i <= index ? themePalette.accent : "transparent",
+                  border: `1px solid ${themePalette.text}`,
+                  opacity: i === index ? 1 : 0.4,
+                }}
+              />
+              {i === index && (
+                <motion.div
+                  className="absolute top-1/2 left-1/2 w-6 h-6 rounded-full border"
+                  style={{ borderColor: themePalette.accent }}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 0.3 }}
+                  transition={{ duration: 0.5 }}
+                  layoutId="activeIndicator"
+                />
+              )}
+            </motion.div>
           ))}
         </div>
 
-        <div
+        {/* Job card */}
+        <motion.div
           key={index}
-          className="max-w-4xl w-full text-left rounded-sm paper-texture paper-shadow-lg h-[65vh] overflow-auto transition-all duration-500 relative"
+          className="max-w-4xl w-full text-left washi-texture zen-shadow-lg h-[65vh] overflow-auto transition-all duration-500 relative"
           style={{
             backgroundColor: themePalette.bg,
             color: themePalette.text,
-            transform: "rotate(-0.5deg)",
           }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
+          {/* Header */}
           <motion.div
             variants={headerVariants}
             initial="hidden"
             animate="visible"
-            exit="hidden"
-            className="p-8 sticky top-0 transition-colors duration-500 border-b-2 torn-edge"
+            className="p-10 sticky top-0 z-10 transition-colors duration-500 border-b calligraphy-accent"
             style={{
               backgroundColor: themePalette.bg,
-              borderColor: themePalette.accent,
+              borderColor: `${themePalette.accent}20`,
             }}
           >
-            <motion.div className="flex justify-between items-start mb-3" variants={itemVariants}>
-              <div className="stamp-effect bg-transparent text-xs font-handwritten" style={{ color: themePalette.accent }}>
-                Experience
-              </div>
-              <p
-                className="text-sm font-handwritten"
+            <motion.div className="flex justify-between items-center mb-6" variants={itemVariants}>
+              <span 
+                className="text-xs font-zen-serif tracking-widest uppercase opacity-50"
                 style={{ color: themePalette.accent }}
+              >
+                Experience
+              </span>
+              <p
+                className="text-sm font-zen-mincho tracking-wider opacity-60"
               >
                 {jobHistory[index].year}
               </p>
             </motion.div>
+            
             <motion.h3
-              className="text-3xl font-handwritten mb-2"
+              className="text-3xl font-zen-serif mb-3 tracking-wide"
               variants={itemVariants}
             >
               {jobHistory[index].company}
             </motion.h3>
-            <motion.p className="text-xl font-sketch italic opacity-80" variants={itemVariants}>
+            
+            <motion.p 
+              className="text-lg font-zen-mincho opacity-70 tracking-wide" 
+              variants={itemVariants}
+            >
               {jobHistory[index].role}
             </motion.p>
+
+            <motion.div 
+              className="bamboo-divider w-full mt-6"
+              variants={itemVariants}
+              style={{ color: themePalette.accent }}
+            />
           </motion.div>
 
-          <div className="p-8">
+          {/* Content */}
+          <div className="p-10 pt-8">
             <JobDescription
               descriptions={jobHistory[index].description}
               index={index}
             />
           </div>
-        </div>
+        </motion.div>
 
-        <>
-          <button
-            onClick={goNext}
-            className="absolute bottom-10 right-10 px-6 py-3 rounded-md transition-all duration-300 hover:scale-105 paper-shadow hover:paper-shadow-lg font-handwritten text-lg"
-            style={navButtonStyle}
-            aria-label="Next job"
-            title="Next job"
-          >
-            Next →
-          </button>
+        {/* Navigation */}
+        <div className="flex gap-4 mt-8">
           {index > 0 && (
             <button
               onClick={goPrevious}
-              className="absolute bottom-10 left-10 px-6 py-3 rounded-md transition-all duration-300 hover:scale-105 paper-shadow hover:paper-shadow-lg font-handwritten text-lg"
-              style={navButtonStyle}
+              className="px-8 py-3 rounded-sm transition-all duration-500 hover:scale-105 zen-shadow hover:zen-shadow-md font-zen-serif text-sm tracking-widest border"
+              style={{
+                ...navButtonStyle,
+                borderColor: `${navButtonStyle.border.split(' ')[2]}40`,
+              }}
               aria-label="Previous job"
               title="Previous job"
             >
-              ← Previous
+              ← 前
             </button>
           )}
-        </>
+          <button
+            onClick={goNext}
+            className="px-8 py-3 rounded-sm transition-all duration-500 hover:scale-105 zen-shadow hover:zen-shadow-md font-zen-serif text-sm tracking-widest border"
+            style={{
+              ...navButtonStyle,
+              borderColor: `${navButtonStyle.border.split(' ')[2]}40`,
+            }}
+            aria-label="Next job"
+            title="Next job"
+          >
+            次 →
+          </button>
+        </div>
       </section>
 
       <Footer />

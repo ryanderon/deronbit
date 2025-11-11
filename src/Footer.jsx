@@ -1,13 +1,18 @@
 export const Footer = () => (
-  <footer className="py-12 text-center bg-paper-tan dark:bg-paper-brown text-paper-ink dark:text-paper-cream relative paper-texture">
-    <div className="absolute top-0 left-0 right-0 h-px bg-paper-brown dark:bg-paper-tan opacity-30"></div>
-    <h3 className="mb-6 text-3xl font-handwritten">Let's Connect</h3>
-    <div className="flex justify-center gap-8 flex-wrap">
+  <footer className="py-16 text-center bg-zen-beige dark:bg-black text-zen-ink dark:text-zen-cream relative">
+    <div className="bamboo-divider w-64 mx-auto mb-10 text-zen-stone dark:text-zen-sage dark:opacity-50"></div>
+
+    <h3 className="mb-8 text-2xl font-zen-serif tracking-wider dark:text-zen-white">Connect</h3>
+    <p className="text-xs mb-6 font-zen-mincho tracking-widest opacity-40 dark:opacity-70 dark:text-zen-beige">
+      つながる
+    </p>
+
+    <div className="flex justify-center gap-12 flex-wrap mb-10">
       <a
         href="https://www.linkedin.com/in/ryan-a-s-sinaga-0017b9148/"
         target="_blank"
         rel="noopener noreferrer"
-        className="handwritten-underline hover:text-paper-blue transition-colors text-xl font-sketch"
+        className="brush-underline hover:text-zen-bamboo dark:hover:text-zen-gold transition-all duration-500 text-base font-zen-mincho tracking-wide dark:text-zen-cream"
       >
         LinkedIn
       </a>
@@ -15,7 +20,7 @@ export const Footer = () => (
         href="https://github.com/ryanderon"
         target="_blank"
         rel="noopener noreferrer"
-        className="handwritten-underline hover:text-paper-blue transition-colors text-xl font-sketch"
+        className="brush-underline hover:text-zen-bamboo dark:hover:text-zen-gold transition-all duration-500 text-base font-zen-mincho tracking-wide dark:text-zen-cream"
       >
         GitHub
       </a>
@@ -23,11 +28,16 @@ export const Footer = () => (
         href="https://instagram.com/ryanderon"
         target="_blank"
         rel="noopener noreferrer"
-        className="handwritten-underline hover:text-paper-blue transition-colors text-xl font-sketch"
+        className="brush-underline hover:text-zen-bamboo dark:hover:text-zen-gold transition-all duration-500 text-base font-zen-mincho tracking-wide dark:text-zen-cream"
       >
         Instagram
       </a>
     </div>
-    <p className="mt-8 text-sm opacity-60 font-sketch">Made with ❤️ on paper</p>
+
+    <div className="bamboo-divider w-48 mx-auto my-8 text-zen-stone dark:text-zen-sage dark:opacity-50"></div>
+
+    <p className="text-xs opacity-40 font-zen-mincho tracking-widest dark:opacity-60 dark:text-zen-beige">
+      2024 · 静寂
+    </p>
   </footer>
 );

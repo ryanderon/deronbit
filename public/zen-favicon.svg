@@ -1,0 +1,15 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with rounded corners -->
+  <rect width="32" height="32" fill="#1a1a1a" rx="6"/>
+  
+  <!-- Letter R in zen style -->
+  <text 
+    x="16" 
+    y="23" 
+    font-family="serif" 
+    font-size="20" 
+    font-weight="600" 
+    fill="#f5f2ed" 
+    text-anchor="middle"
+  >R</text>
+</svg>

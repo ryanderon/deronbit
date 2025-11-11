@@ -1,27 +1,30 @@
 /* Framework imports */
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 @import "tailwindcss";
 
 /* Custom variants */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Theme variables - Paper Based */
+/* Theme variables - Japanese Zen */
 @theme {
-  --color-paper-cream: #f4f1e8;
-  --color-paper-white: #fefdfb;
-  --color-paper-tan: #e8dcc4;
-  --color-paper-brown: #8b7355;
-  --color-paper-dark: #3d3328;
-  --color-paper-ink: #2c2416;
-  --color-paper-blue: #4a6fa5;
-  --color-paper-red: #c85a54;
-  --color-paper-green: #6b8e6f;
+  --color-zen-white: #faf9f7;
+  --color-zen-cream: #f5f2ed;
+  --color-zen-beige: #e8e4db;
+  --color-zen-sage: #b8bdb5;
+  --color-zen-stone: #8a8d8a;
+  --color-zen-charcoal: #3a3a3a;
+  --color-zen-ink: #1a1a1a;
+  --color-zen-red: #c73e3a;
+  --color-zen-gold: #d4af37;
+  --color-zen-bamboo: #7c9a6d;
 }
 
 /* Base element styles */
 html,
 body {
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 html {
@@ -29,30 +32,28 @@ html {
 }
 
 body {
-  font-family: "Kalam", cursive;
+  font-family: "Zen Kaku Gothic New", sans-serif;
   scroll-snap-type: y mandatory;
-  background-color: var(--color-paper-cream);
+  background-color: var(--color-zen-cream);
   background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 31px,
-      rgba(139, 115, 85, 0.08) 31px,
-      rgba(139, 115, 85, 0.08) 32px
-    );
+    radial-gradient(circle at 25% 25%, rgba(184, 189, 181, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(124, 154, 109, 0.02) 0%, transparent 50%);
+  letter-spacing: 0.02em;
 }
 
 /* Typography */
 h1,
 h2,
 h3,
-.font-handwritten {
-  font-family: "Caveat", cursive;
-  font-weight: 600;
+.font-zen-serif {
+  font-family: "Noto Serif JP", serif;
+  font-weight: 500;
+  letter-spacing: 0.05em;
 }
 
-.font-sketch {
-  font-family: "Indie Flower", cursive;
+.font-zen-mincho {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 400;
 }
 
 /* Layout elements */
@@ -60,127 +61,236 @@ section {
   scroll-snap-align: start;
 }
 
-/* Paper texture effects */
-.paper-texture {
+/* Washi paper texture */
+.washi-texture {
   position: relative;
-  background-color: var(--color-paper-white);
+  background-color: var(--color-zen-white);
   background-image: 
-    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='washi'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' /%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23washi)' opacity='0.015'/%3E%3C/svg%3E");
 }
 
-.paper-shadow {
+/* Zen shadow - minimal and soft */
+.zen-shadow {
   box-shadow: 
-    0 1px 3px rgba(0, 0, 0, 0.12),
-    0 1px 2px rgba(0, 0, 0, 0.08),
-    2px 4px 8px rgba(0, 0, 0, 0.05);
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
-.paper-shadow-lg {
+.zen-shadow-md {
   box-shadow: 
-    0 4px 6px rgba(0, 0, 0, 0.07),
-    0 2px 4px rgba(0, 0, 0, 0.06),
-    4px 8px 16px rgba(0, 0, 0, 0.08);
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
-/* Handwritten underline effect */
-.handwritten-underline {
+.zen-shadow-lg {
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Brush stroke underline */
+.brush-underline {
   position: relative;
   display: inline-block;
 }
 
-.handwritten-underline::after {
+.brush-underline::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -2px;
+  bottom: -4px;
   width: 100%;
-  height: 2px;
+  height: 3px;
   background: currentColor;
-  opacity: 0.6;
+  opacity: 0;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1px;
 }
 
-.handwritten-underline:hover::after {
+.brush-underline:hover::after {
+  opacity: 0.3;
   transform: scaleX(1);
 }
 
-/* Torn paper edge effect */
-.torn-edge {
+/* Bamboo divider */
+.bamboo-divider {
+  position: relative;
+  height: 2px;
+  background: linear-gradient(to right, transparent, currentColor 20%, currentColor 80%, transparent);
+  opacity: 0.2;
+}
+
+.bamboo-divider::before,
+.bamboo-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  opacity: 0.4;
+}
+
+.bamboo-divider::before {
+  left: 20%;
+}
+
+.bamboo-divider::after {
+  right: 20%;
+}
+
+/* Enso circle (Zen circle) */
+.enso-circle {
+  position: relative;
+  display: inline-block;
+}
+
+.enso-circle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  opacity: 0.15;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+/* Ink wash effect */
+.ink-wash {
+  background: linear-gradient(135deg, 
+    rgba(58, 58, 58, 0.02) 0%, 
+    rgba(58, 58, 58, 0.04) 50%, 
+    rgba(58, 58, 58, 0.02) 100%);
+}
+
+/* Shoji screen border */
+.shoji-border {
+  border: 1px solid currentColor;
+  opacity: 0.15;
   position: relative;
 }
 
-.torn-edge::before {
+.shoji-border::before {
   content: '';
   position: absolute;
-  top: -5px;
+  top: 50%;
   left: 0;
   right: 0;
-  height: 6px;
-  background-image: 
-    url("data:image/svg+xml,%3Csvg width='100' height='6' viewBox='0 0 100 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,3 Q2,0 4,3 T8,3 T12,3 T16,3 T20,3 T24,3 T28,3 T32,3 T36,3 T40,3 T44,3 T48,3 T52,3 T56,3 T60,3 T64,3 T68,3 T72,3 T76,3 T80,3 T84,3 T88,3 T92,3 T96,3 T100,3' fill='%23f4f1e8'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-size: 100px 6px;
-}
-
-/* Stamp effect */
-.stamp-effect {
-  border: 3px dashed var(--color-paper-red);
-  padding: 0.5rem 1rem;
-  transform: rotate(-2deg);
-  opacity: 0.8;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.1;
 }
 
 /* Animations */
-@keyframes paper-float {
+@keyframes zen-float {
   0%, 100% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px) rotate(1deg);
+    transform: translateY(-8px);
   }
 }
 
-.paper-float:hover {
-  animation: paper-float 2s ease-in-out infinite;
+.zen-float:hover {
+  animation: zen-float 3s ease-in-out infinite;
 }
 
-/* Dark mode - Aged paper */
-body.dark {
-  background-color: var(--color-paper-dark);
-  background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 31px,
-      rgba(244, 241, 232, 0.05) 31px,
-      rgba(244, 241, 232, 0.05) 32px
-    );
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+    opacity: 0.3;
+  }
+  100% {
+    box-shadow: 0 0 0 20px currentColor;
+    opacity: 0;
+  }
 }
 
-body.dark .paper-texture {
-  background-color: var(--color-paper-brown);
-  background-image: 
-    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-}
-
-/* Sketch line decoration */
-.sketch-border {
-  position: relative;
-  border: 2px solid currentColor;
-  border-radius: 2px;
-}
-
-.sketch-border::before {
+.ripple-effect:active::after {
   content: '';
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  border: 2px solid currentColor;
-  border-radius: 2px;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  animation: ripple 0.6s ease-out;
+}
+
+/* Cherry blossom decoration */
+@keyframes sakura-fall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.sakura {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: var(--color-zen-red);
   opacity: 0.3;
-  transform: rotate(-0.5deg);
+  border-radius: 50% 0;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+/* Dark mode - Night Zen */
+body.dark {
+  background-color: var(--color-zen-charcoal);
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(124, 154, 109, 0.02) 0%, transparent 50%);
+}
+
+body.dark .washi-texture {
+  background-color: #000000;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='washi'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' /%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23washi)' opacity='0.01'/%3E%3C/svg%3E");
+}
+
+/* Calligraphy accent */
+.calligraphy-accent {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.calligraphy-accent::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, 
+    transparent, 
+    currentColor 20%, 
+    currentColor 80%, 
+    transparent);
+  opacity: 0.3;
+  border-radius: 2px;
+}
+
+/* Minimal focus states */
+*:focus-visible {
+  outline: 2px solid var(--color-zen-bamboo);
+  outline-offset: 4px;
+  opacity: 0.3;
 }
