@@ -60,62 +60,75 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-300 bg-retro-light text-retro-brown dark:bg-retro-dark dark:text-retro-light relative scanlines">
+    <div className="min-h-screen transition-colors duration-300 bg-paper-cream text-paper-ink dark:bg-paper-dark dark:text-paper-white relative">
       <button
         onClick={toggleTheme}
-        className={`fixed top-4 right-4 z-50 px-3 py-1 text-md rounded-full pixel-border hover:shadow-retro-glow transition duration-300 ${
-          dark ? "bg-retro-gold text-white" : "bg-retro-dark text-white"
+        className={`fixed top-6 right-6 z-50 px-4 py-2 text-xl font-handwritten rounded-lg paper-shadow hover:paper-shadow-lg transition-all duration-300 ${
+          dark ? "bg-paper-tan text-paper-ink" : "bg-paper-white text-paper-ink border-2 border-paper-brown"
         }`}
         aria-label="Toggle theme"
         title="Toggle theme"
       >
-        {dark ? "☀" : "🌙"}
+        {dark ? "☀️ Light" : "🌙 Dark"}
       </button>
 
-      <section className="h-screen flex flex-col items-center justify-center p-6 border-b-8 border-retro-gold">
+      <section className="h-screen flex flex-col items-center justify-center p-6 relative">
+        <div className="absolute inset-0 opacity-5 dark:opacity-10 pointer-events-none">
+          <svg width="100%" height="100%">
+            <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="currentColor" />
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#dots)" />
+          </svg>
+        </div>
+
         <motion.div
-          className="w-60 h-60 mb-6 overflow-hidden"
-          initial={{ scale: 0.8, opacity: 0, borderRadius: "0.5rem" }}
-          animate={{ scale: 1, opacity: 1, borderRadius: "0.5rem" }}
-          whileHover={{ scale: 1.05, borderRadius: "9999px" }}
-          whileTap={{ scale: 0.95, borderRadius: "9999px" }}
-          layout
+          className="w-64 h-64 mb-8 overflow-hidden paper-shadow-lg paper-texture rounded-sm relative paper-float"
+          initial={{ scale: 0.8, opacity: 0, rotate: -5 }}
+          animate={{ scale: 1, opacity: 1, rotate: 2 }}
+          whileHover={{ scale: 1.05, rotate: 0 }}
+          whileTap={{ scale: 0.95, rotate: -2 }}
           transition={{
-            duration: 0.5,
+            duration: 0.6,
             ease: [0.25, 0.1, 0.25, 1],
-            layout: { duration: 0.3 },
           }}
         >
           <img
             src={`${import.meta.env.BASE_URL}/me.jpeg`}
             alt="myself"
-            className="w-full h-full object-cover pixelated object-[50%_80%]"
+            className="w-full h-full object-cover object-[50%_80%]"
           />
+          <div className="absolute inset-0 border-8 border-paper-white dark:border-paper-tan pointer-events-none"></div>
         </motion.div>
 
-        <h3 className="text-base text-center max-w-xl leading-relaxed">
-          Hi, I'm Ryan
-          <br />A Frontend Engineer
-        </h3>
+        <div className="text-center max-w-xl">
+          <h3 className="text-4xl font-handwritten mb-3 text-paper-ink dark:text-paper-cream">
+            Hi, I'm Ryan
+          </h3>
+          <p className="text-2xl font-sketch text-paper-brown dark:text-paper-tan">
+            A Frontend Engineer
+          </p>
+          <div className="mt-4 w-32 h-1 bg-paper-brown dark:bg-paper-tan mx-auto opacity-40" style={{ transform: 'rotate(-1deg)' }}></div>
+        </div>
       </section>
 
       <section
-        className="h-screen flex flex-col justify-center items-center relative px-6 transition-colors duration-500"
+        className="min-h-screen flex flex-col justify-center items-center relative px-6 py-20 transition-colors duration-500"
         style={{
           backgroundColor: themePalette.bg,
           color: themePalette.text,
         }}
       >
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-3 mb-8">
           {jobHistory.map((_, i) => (
             <div
               key={i}
-              className="w-6 h-4 border-2 transition-colors duration-300 cursor-pointer"
+              className="w-3 h-3 rounded-full border-2 transition-all duration-300 cursor-pointer hover:scale-125"
               style={{
                 backgroundColor:
-                  i <= index ? themePalette.accent : themePalette.bg,
+                  i <= index ? themePalette.accent : "transparent",
                 borderColor: themePalette.text,
-                imageRendering: "pixelated",
+                boxShadow: i === index ? `0 0 0 3px ${themePalette.accent}40` : "none",
               }}
               onClick={() => setIndex(i)}
               aria-label={`Select job ${i + 1}`}
@@ -132,11 +145,11 @@ function App() {
 
         <div
           key={index}
-          className="max-w-3xl text-center rounded-lg shadow-lg border-4 h-[65%] overflow-scroll transition-colors duration-500"
+          className="max-w-4xl w-full text-left rounded-sm paper-texture paper-shadow-lg h-[65vh] overflow-auto transition-all duration-500 relative"
           style={{
             backgroundColor: themePalette.bg,
             color: themePalette.text,
-            borderColor: themePalette.accent,
+            transform: "rotate(-0.5deg)",
           }}
         >
           <motion.div
@@ -144,32 +157,35 @@ function App() {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="p-6 sticky top-0 transition-colors duration-500 border-b-2"
+            className="p-8 sticky top-0 transition-colors duration-500 border-b-2 torn-edge"
             style={{
               backgroundColor: themePalette.bg,
               borderColor: themePalette.accent,
             }}
           >
-            <motion.div className="flex justify-end" variants={itemVariants}>
+            <motion.div className="flex justify-between items-start mb-3" variants={itemVariants}>
+              <div className="stamp-effect bg-transparent text-xs font-handwritten" style={{ color: themePalette.accent }}>
+                Experience
+              </div>
               <p
-                className="text-xs font-bold mb-2 font-pixel"
+                className="text-sm font-handwritten"
                 style={{ color: themePalette.accent }}
               >
                 {jobHistory[index].year}
               </p>
             </motion.div>
             <motion.h3
-              className="text-lg font-semibold"
+              className="text-3xl font-handwritten mb-2"
               variants={itemVariants}
             >
               {jobHistory[index].company}
             </motion.h3>
-            <motion.p className="text-md italic" variants={itemVariants}>
+            <motion.p className="text-xl font-sketch italic opacity-80" variants={itemVariants}>
               {jobHistory[index].role}
             </motion.p>
           </motion.div>
 
-          <div className="p-4">
+          <div className="p-8">
             <JobDescription
               descriptions={jobHistory[index].description}
               index={index}
@@ -180,22 +196,22 @@ function App() {
         <>
           <button
             onClick={goNext}
-            className="absolute bottom-10 right-10 px-4 py-2 rounded transition duration-300 hover:brightness-110"
+            className="absolute bottom-10 right-10 px-6 py-3 rounded-md transition-all duration-300 hover:scale-105 paper-shadow hover:paper-shadow-lg font-handwritten text-lg"
             style={navButtonStyle}
             aria-label="Next job"
             title="Next job"
           >
-            Next
+            Next →
           </button>
           {index > 0 && (
             <button
               onClick={goPrevious}
-              className="absolute bottom-10 left-10 px-4 py-2 rounded transition duration-300 hover:brightness-110"
+              className="absolute bottom-10 left-10 px-6 py-3 rounded-md transition-all duration-300 hover:scale-105 paper-shadow hover:paper-shadow-lg font-handwritten text-lg"
               style={navButtonStyle}
               aria-label="Previous job"
               title="Previous job"
             >
-              Previous
+              ← Previous
             </button>
           )}
         </>

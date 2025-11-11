@@ -1,20 +1,21 @@
 /* Framework imports */
-@tailwind base;
-@tailwind components;
 @tailwind utilities;
 @import "tailwindcss";
 
 /* Custom variants */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Theme variables */
+/* Theme variables - Paper Based */
 @theme {
-  --color-retro-light: #ece6c2;
-  --color-retro-dark: #1e1e1e;
-  --color-retro-brown: #6f5643;
-  --color-retro-orange: #cc6b49;
-  --color-retro-gold: #d2a24c;
-  --color-retro-mint: #73bda8;
+  --color-paper-cream: #f4f1e8;
+  --color-paper-white: #fefdfb;
+  --color-paper-tan: #e8dcc4;
+  --color-paper-brown: #8b7355;
+  --color-paper-dark: #3d3328;
+  --color-paper-ink: #2c2416;
+  --color-paper-blue: #4a6fa5;
+  --color-paper-red: #c85a54;
+  --color-paper-green: #6b8e6f;
 }
 
 /* Base element styles */
@@ -28,16 +29,30 @@ html {
 }
 
 body {
-  font-family: "VT323", monospace;
+  font-family: "Kalam", cursive;
   scroll-snap-type: y mandatory;
+  background-color: var(--color-paper-cream);
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 31px,
+      rgba(139, 115, 85, 0.08) 31px,
+      rgba(139, 115, 85, 0.08) 32px
+    );
 }
 
 /* Typography */
 h1,
 h2,
 h3,
-.font-pixel {
-  font-family: "Press Start 2P", monospace;
+.font-handwritten {
+  font-family: "Caveat", cursive;
+  font-weight: 600;
+}
+
+.font-sketch {
+  font-family: "Indie Flower", cursive;
 }
 
 /* Layout elements */
@@ -45,48 +60,127 @@ section {
   scroll-snap-align: start;
 }
 
-/* Utility classes */
-.pixelated {
-  image-rendering: pixelated;
+/* Paper texture effects */
+.paper-texture {
+  position: relative;
+  background-color: var(--color-paper-white);
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
-/* Animations and effects */
-@keyframes glow {
-  0%,
-  100% {
-    box-shadow: 0 0 2px #fff, 0 0 4px #ff0, 0 0 6px #ff9900;
+.paper-shadow {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    2px 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.paper-shadow-lg {
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.07),
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    4px 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Handwritten underline effect */
+.handwritten-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.handwritten-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.6;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.handwritten-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Torn paper edge effect */
+.torn-edge {
+  position: relative;
+}
+
+.torn-edge::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='100' height='6' viewBox='0 0 100 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,3 Q2,0 4,3 T8,3 T12,3 T16,3 T20,3 T24,3 T28,3 T32,3 T36,3 T40,3 T44,3 T48,3 T52,3 T56,3 T60,3 T64,3 T68,3 T72,3 T76,3 T80,3 T84,3 T88,3 T92,3 T96,3 T100,3' fill='%23f4f1e8'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 100px 6px;
+}
+
+/* Stamp effect */
+.stamp-effect {
+  border: 3px dashed var(--color-paper-red);
+  padding: 0.5rem 1rem;
+  transform: rotate(-2deg);
+  opacity: 0.8;
+}
+
+/* Animations */
+@keyframes paper-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
   }
   50% {
-    box-shadow: 0 0 4px #fff, 0 0 8px #ff0, 0 0 12px #ff9900;
+    transform: translateY(-5px) rotate(1deg);
   }
 }
 
-.hover\\:shadow-retro-glow:hover {
-  animation: glow 1.2s ease-in-out infinite;
+.paper-float:hover {
+  animation: paper-float 2s ease-in-out infinite;
 }
 
-/* Dark mode and visual effects */
-body.dark::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-image: radial-gradient(white 1px, transparent 1px);
-  background-size: 20px 20px;
-  opacity: 0.1;
+/* Dark mode - Aged paper */
+body.dark {
+  background-color: var(--color-paper-dark);
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 31px,
+      rgba(244, 241, 232, 0.05) 31px,
+      rgba(244, 241, 232, 0.05) 32px
+    );
 }
 
-.scanlines::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.03) 1px,
-    transparent 1px,
-    transparent 2px
-  );
+body.dark .paper-texture {
+  background-color: var(--color-paper-brown);
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* Sketch line decoration */
+.sketch-border {
+  position: relative;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+}
+
+.sketch-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+  opacity: 0.3;
+  transform: rotate(-0.5deg);
 }

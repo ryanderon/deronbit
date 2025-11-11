@@ -5,14 +5,14 @@ export const jobHistory = [
     company: "PT Siloam International Hospitals Tbk.",
     palette: {
       light: {
-        bg: "var(--color-retro-gold)",
-        text: "var(--color-retro-dark)",
-        accent: "var(--color-retro-orange)",
+        bg: "#fff9e6",
+        text: "#2c2416",
+        accent: "#c85a54",
       },
       dark: {
-        bg: "var(--color-retro-dark)",
-        text: "var(--color-retro-light)",
-        accent: "var(--color-retro-orange)",
+        bg: "#5a4a3a",
+        text: "#fefdfb",
+        accent: "#e8a87c",
       },
     },
     description: [
@@ -31,14 +31,14 @@ export const jobHistory = [
     company: "Yesplis Indonesia",
     palette: {
       light: {
-        bg: "var(--color-retro-brown)",
-        text: "var(--color-retro-light)",
-        accent: "var(--color-retro-mint)",
+        bg: "#e8f4f8",
+        text: "#2c2416",
+        accent: "#4a6fa5",
       },
       dark: {
-        bg: "var(--color-retro-mint)",
-        text: "var(--color-retro-dark)",
-        accent: "var(--color-retro-light)",
+        bg: "#3d5a6b",
+        text: "#fefdfb",
+        accent: "#a8c5dd",
       },
     },
     description: [
@@ -55,14 +55,14 @@ export const jobHistory = [
     company: "PT Bithealth Teknologi Pintar",
     palette: {
       light: {
-        bg: "var(--color-retro-orange)",
-        text: "var(--color-retro-light)",
-        accent: "var(--color-retro-dark)",
+        bg: "#fef3e2",
+        text: "#2c2416",
+        accent: "#d68b5c",
       },
       dark: {
-        bg: "var(--color-retro-dark)",
-        text: "var(--color-retro-orange)",
-        accent: "var(--color-retro-light)",
+        bg: "#4a3f30",
+        text: "#fefdfb",
+        accent: "#f4a261",
       },
     },
     description: [
@@ -78,14 +78,14 @@ export const jobHistory = [
     company: "PT Namdeska Solution",
     palette: {
       light: {
-        bg: "var(--color-retro-mint)",
-        text: "var(--color-retro-dark)",
-        accent: "var(--color-retro-gold)",
+        bg: "#f0f8f0",
+        text: "#2c2416",
+        accent: "#6b8e6f",
       },
       dark: {
-        bg: "var(--color-retro-dark)",
-        text: "var(--color-retro-mint)",
-        accent: "var(--color-retro-gold)",
+        bg: "#3a4a3c",
+        text: "#fefdfb",
+        accent: "#9dbfa1",
       },
     },
     description: [
@@ -103,14 +103,14 @@ export const jobHistory = [
     company: "PT Jejaring Makanan Indonesia (Kulina.id)",
     palette: {
       light: {
-        bg: "var(--color-retro-light)",
-        text: "var(--color-retro-dark)",
-        accent: "var(--color-retro-orange)",
+        bg: "#fffbf0",
+        text: "#2c2416",
+        accent: "#b8946f",
       },
       dark: {
-        bg: "var(--color-retro-dark)",
-        text: "var(--color-retro-light)",
-        accent: "var(--color-retro-orange)",
+        bg: "#3d3328",
+        text: "#fefdfb",
+        accent: "#d4b896",
       },
     },
     description: [
@@ -127,14 +127,14 @@ export const jobHistory = [
     company: "Lumintu Logic",
     palette: {
       light: {
-        bg: "var(--color-retro-dark)",
-        text: "var(--color-retro-light)",
-        accent: "var(--color-retro-gold)",
+        bg: "#f8f0e8",
+        text: "#2c2416",
+        accent: "#8b7355",
       },
       dark: {
-        bg: "var(--color-retro-light)",
-        text: "var(--color-retro-dark)",
-        accent: "var(--color-retro-gold)",
+        bg: "#5a4a3a",
+        text: "#fefdfb",
+        accent: "#c4a882",
       },
     },
     description: [
