@@ -163,7 +163,7 @@ function App() {
               />
               {i === index && (
                 <motion.div
-                  className="absolute top-1/2 left-1/2 w-6 h-6 rounded-full border"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full border"
                   style={{ borderColor: themePalette.accent }}
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 0.3 }}
