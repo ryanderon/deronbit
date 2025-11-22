@@ -12,7 +12,7 @@ export const JobCard = ({ job, index }) => {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.8, delay: index * 0.15, ease: "easeOut" }}
-      className="relative pl-8 md:pl-16 group"
+      className="relative pl-6 md:pl-16 group"
     >
       <div className="absolute left-[-9px] top-1 w-5 h-5 z-10 transition-transform duration-500 group-hover:scale-125">
         <svg
