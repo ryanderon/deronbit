@@ -12,19 +12,19 @@ export const JobDescription = ({ descriptions, index }) => (
     {descriptions.map((desc, i) => (
       <motion.div
         key={i}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          duration: 0.6, 
-          delay: i * 0.08,
-          ease: [0.4, 0, 0.2, 1]
+        initial={{ opacity: 0, filter: "blur(4px)" }}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
+        transition={{
+          duration: 0.8,
+          delay: i * 0.15,
+          ease: "easeOut",
         }}
         className="flex gap-4 items-start group"
       >
-        <span className="text-lg mt-1 flex-shrink-0 opacity-30 group-hover:opacity-50 transition-opacity duration-300">
-          ◦
+        <span className="text-2xl mt-[-6px] flex-shrink-0 text-zen-ink dark:text-zen-white opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+          •
         </span>
-        <p className="text-base leading-loose font-zen-mincho tracking-wide opacity-80">
+        <p className="text-base leading-loose font-zen-mincho tracking-wide text-zen-ink/80 dark:text-zen-white/80">
           {desc}
         </p>
       </motion.div>

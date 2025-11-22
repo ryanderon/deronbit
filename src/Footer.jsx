@@ -1,43 +1,51 @@
 export const Footer = () => (
-  <footer className="py-16 text-center bg-zen-beige dark:bg-black text-zen-ink dark:text-zen-cream relative">
-    <div className="bamboo-divider w-64 mx-auto mb-10 text-zen-stone dark:text-zen-sage dark:opacity-50"></div>
+  <footer className="py-24 text-center relative overflow-hidden">
+    <div className="w-32 h-1 bg-zen-ink/10 dark:bg-zen-white/10 mx-auto mb-12 rounded-full"></div>
 
-    <h3 className="mb-8 text-2xl font-zen-serif tracking-wider dark:text-zen-white">Connect</h3>
-    <p className="text-xs mb-6 font-zen-mincho tracking-widest opacity-40 dark:opacity-70 dark:text-zen-beige">
-      つながる
-    </p>
+    <div className="relative inline-block mb-12">
+      <div className="w-16 h-16 border-4 border-zen-red rounded-sm flex items-center justify-center transform rotate-3 mx-auto hover:rotate-0 transition-transform duration-500 cursor-pointer bg-zen-red/5">
+        <span className="text-zen-red font-zen-serif font-bold text-2xl writing-vertical-rl">
+          デロン
+        </span>
+      </div>
+    </div>
 
-    <div className="flex justify-center gap-12 flex-wrap mb-10">
+    <h3 className="mb-8 text-2xl font-zen-serif tracking-widest text-zen-ink dark:text-zen-white">
+      Connect
+    </h3>
+
+    <div className="flex justify-center gap-12 flex-wrap mb-16">
       <a
         href="https://www.linkedin.com/in/ryan-a-s-sinaga-0017b9148/"
         target="_blank"
         rel="noopener noreferrer"
-        className="brush-underline hover:text-zen-bamboo dark:hover:text-zen-gold transition-all duration-500 text-base font-zen-mincho tracking-wide dark:text-zen-cream"
+        className="group relative text-base font-zen-mincho tracking-widest text-zen-stone dark:text-zen-sage hover:text-zen-ink dark:hover:text-zen-white transition-colors duration-500"
       >
         LinkedIn
+        <span className="absolute -bottom-2 left-0 w-0 h-px bg-zen-red transition-all duration-500 group-hover:w-full"></span>
       </a>
       <a
         href="https://github.com/ryanderon"
         target="_blank"
         rel="noopener noreferrer"
-        className="brush-underline hover:text-zen-bamboo dark:hover:text-zen-gold transition-all duration-500 text-base font-zen-mincho tracking-wide dark:text-zen-cream"
+        className="group relative text-base font-zen-mincho tracking-widest text-zen-stone dark:text-zen-sage hover:text-zen-ink dark:hover:text-zen-white transition-colors duration-500"
       >
         GitHub
+        <span className="absolute -bottom-2 left-0 w-0 h-px bg-zen-red transition-all duration-500 group-hover:w-full"></span>
       </a>
       <a
         href="https://instagram.com/ryanderon"
         target="_blank"
         rel="noopener noreferrer"
-        className="brush-underline hover:text-zen-bamboo dark:hover:text-zen-gold transition-all duration-500 text-base font-zen-mincho tracking-wide dark:text-zen-cream"
+        className="group relative text-base font-zen-mincho tracking-widest text-zen-stone dark:text-zen-sage hover:text-zen-ink dark:hover:text-zen-white transition-colors duration-500"
       >
         Instagram
+        <span className="absolute -bottom-2 left-0 w-0 h-px bg-zen-red transition-all duration-500 group-hover:w-full"></span>
       </a>
     </div>
 
-    <div className="bamboo-divider w-48 mx-auto my-8 text-zen-stone dark:text-zen-sage dark:opacity-50"></div>
-
-    <p className="text-xs opacity-40 font-zen-mincho tracking-widest dark:opacity-60 dark:text-zen-beige">
-      2024 · 静寂
+    <p className="text-xs text-zen-stone/40 dark:text-zen-sage/40 font-zen-mincho tracking-[0.3em]">
+      2024 · 静寂 (Silence)
     </p>
   </footer>
 );

@@ -5,24 +5,24 @@
 /* Custom variants */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Theme variables - Japanese Zen */
+/* Theme variables - Sumi-e (Ink Wash) */
 @theme {
-  --color-zen-white: #faf9f7;
-  --color-zen-cream: #f5f2ed;
-  --color-zen-beige: #e8e4db;
-  --color-zen-sage: #b8bdb5;
-  --color-zen-stone: #8a8d8a;
-  --color-zen-charcoal: #3a3a3a;
-  --color-zen-ink: #1a1a1a;
-  --color-zen-red: #c73e3a;
-  --color-zen-gold: #d4af37;
-  --color-zen-bamboo: #7c9a6d;
+  --color-zen-white: #fcfcfc;
+  --color-zen-cream: #f5f5f5; /* Rice Paper */
+  --color-zen-beige: #e8e8e8;
+  --color-zen-sage: #a8a8a8; /* Light Ink Mist */
+  --color-zen-stone: #666666; /* Medium Ink */
+  --color-zen-charcoal: #333333; /* Dark Ink */
+  --color-zen-ink: #1a1a1a; /* Deep Black */
+  --color-zen-red: #b30000; /* Hanko Red */
+  --color-zen-gold: #c5a059; /* Muted Gold */
+  --color-zen-bamboo: #556b2f; /* Dark Olive */
 }
 
 /* Base element styles */
 html,
 body {
-  transition: background-color 0.5s ease, color 0.5s ease;
+  transition: background-color 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 html {
@@ -32,11 +32,11 @@ html {
 body {
   font-family: "Zen Kaku Gothic New", sans-serif;
   scroll-snap-type: y mandatory;
-  background-color: var(--color-zen-cream);
+  background-color: var(--color-zen-white);
+  /* Rice paper texture */
   background-image: 
-    radial-gradient(circle at 25% 25%, rgba(184, 189, 181, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(124, 154, 109, 0.02) 0%, transparent 50%);
-  letter-spacing: 0.02em;
+    url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  letter-spacing: 0.03em;
 }
 
 /* Typography */
@@ -250,6 +250,33 @@ section {
   pointer-events: none;
 }
 
+/* Slow spin animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-slow-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-slow-reverse {
+  animation: spin-slow-reverse 25s linear infinite;
+}
+
 /* Dark mode - Night Zen */
 body.dark {
   background-color: var(--color-zen-charcoal);
@@ -291,4 +318,9 @@ body.dark .washi-texture {
   outline: 2px solid var(--color-zen-bamboo);
   outline-offset: 4px;
   opacity: 0.3;
+}
+
+.writing-vertical-rl {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
 }

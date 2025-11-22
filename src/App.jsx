@@ -12,6 +12,7 @@ const isDarkPreferred = window.matchMedia?.(
 
 function App() {
   const [dark, setDark] = useState(isDarkPreferred);
+  const [isProfileHovered, setIsProfileHovered] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
@@ -20,102 +21,145 @@ function App() {
   const toggleTheme = () => setDark((d) => !d);
 
   return (
-    <div className="min-h-screen transition-colors duration-500 bg-zen-cream text-zen-ink dark:bg-zen-charcoal dark:text-zen-white relative overflow-x-hidden">
-      <button
-        onClick={toggleTheme}
-        className={`fixed top-8 right-8 z-50 px-5 py-2 text-sm font-zen-serif tracking-wider rounded-sm zen-shadow-md hover:zen-shadow-lg transition-all duration-500 border ${
-          dark
-            ? "bg-zen-ink text-zen-cream border-zen-gold border-opacity-30"
-            : "bg-zen-white text-zen-ink border-zen-stone border-opacity-20"
-        }`}
-        aria-label="Toggle theme"
-        title="Toggle theme"
-      >
-        {dark ? "☀ 昼" : "☾ 夜"}
-      </button>
+    <div className="flex flex-col md:flex-row min-h-screen md:h-screen bg-zen-white dark:bg-zen-ink transition-colors duration-800 md:overflow-hidden">
+      <svg style={{ position: "absolute", width: 0, height: 0 }}>
+        <filter id="rough-edge">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.05"
+            numOctaves="2"
+            result="noise"
+          />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" />
+        </filter>
+      </svg>
 
-      <section className="h-screen flex flex-col items-center justify-center p-6 relative">
-        
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 opacity-[0.02] dark:opacity-[0.04] pointer-events-none">
-          <svg viewBox="0 0 100 100" className="w-full h-full">
-            <circle
-              cx="50"
-              cy="50"
-              r="45"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="0.5"
-              strokeDasharray="283"
-              strokeDashoffset="30"
-              transform="rotate(-90 50 50)"
-            />
-          </svg>
-        </div>
-
-        <motion.div
-          className="mb-12 relative enso-circle zen-float"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            duration: 1,
-            ease: [0.4, 0, 0.2, 1],
-          }}
-        >
-          <motion.div
-            className="w-72 h-72 overflow-hidden zen-shadow-lg washi-texture relative"
-            style={{
-              clipPath:
-                "polygon(10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%, 0% 10%)",
-            }}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.5 }}
-          >
-            <img
-              src={`${import.meta.env.BASE_URL}/me.jpeg`}
-              alt="myself"
-              className="w-full h-full object-cover object-[50%_80%] grayscale-[20%] contrast-[1.05]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-zen-white/5 to-transparent pointer-events-none"></div>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="text-center max-w-2xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          <h1 className="text-5xl font-zen-serif mb-4 text-zen-ink dark:text-zen-cream tracking-wide">
-            Ryan
-          </h1>
-          <div className="bamboo-divider w-24 mx-auto my-6 text-zen-stone dark:text-zen-sage"></div>
-          <p className="text-xl font-zen-mincho text-zen-stone dark:text-zen-sage tracking-wider">
-            Frontend Engineer
-          </p>
-          <p className="text-sm mt-4 text-zen-sage dark:text-zen-stone opacity-60 tracking-widest">
-            フロントエンドエンジニア
-          </p>
-        </motion.div>
-      </section>
-
-      <section className="min-h-screen py-20 px-4 md:px-10 relative">
-        <div className="max-w-5xl mx-auto relative">
-          
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-zen-stone opacity-30 transform md:-translate-x-1/2"></div>
-
-          {jobHistory.map((job, index) => (
-            <JobCard
-              key={index}
-              job={job}
-              index={index}
-              isEven={index % 2 === 0}
-              dark={dark}
+      <aside className="w-full md:w-5/12 lg:w-1/3 min-h-screen md:h-full relative z-10 flex flex-col justify-center items-center p-12 md:p-8 text-center transition-colors duration-800 bg-zen-white dark:bg-zen-ink text-zen-ink dark:text-zen-white border-b md:border-b-0 md:border-r border-zen-stone/20 shadow-2xl overflow-hidden shrink-0">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-40 dark:opacity-30">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-zen-ink dark:bg-zen-white blur-xl"
+              initial={{
+                width: 0,
+                height: 0,
+                x: Math.random() * 100 + "%",
+                y: Math.random() * 100 + "%",
+                opacity: 0,
+              }}
+              animate={{
+                width: [0, 200 + Math.random() * 300],
+                height: [0, 200 + Math.random() * 300],
+                opacity: [0, 0.4, 0],
+              }}
+              transition={{
+                duration: 10 + Math.random() * 10,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: "easeInOut",
+              }}
             />
           ))}
         </div>
-      </section>
 
-      <Footer />
+        <button
+          onClick={toggleTheme}
+          className="absolute top-6 left-6 p-3 rounded-full hover:bg-zen-stone/10 transition-colors z-50 text-zen-stone dark:text-zen-sage"
+          aria-label="Toggle theme"
+        >
+          {dark ? (
+            <span className="text-xl">○</span> 
+          ) : (
+            <span className="text-xl">●</span>
+          )}
+        </button>
+
+        <motion.div
+          className="mb-8 relative cursor-pointer"
+          initial={{ scale: 0.9, opacity: 0, filter: "blur(10px)" }}
+          animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          onHoverStart={() => setIsProfileHovered(true)}
+          onHoverEnd={() => setIsProfileHovered(false)}
+        >
+          <div className="w-64 h-64 md:w-80 md:h-80 relative z-10 flex items-center justify-center">
+            <motion.div
+              animate={{
+                opacity: isProfileHovered ? 0.5 : 0,
+                scale: isProfileHovered ? 1.1 : 0.8,
+              }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="absolute inset-0 bg-zen-red rounded-full blur-2xl z-0"
+            />
+
+            <svg
+              viewBox="0 0 200 200"
+              className="absolute inset-0 w-full h-full animate-spin-slow-reverse opacity-80 dark:opacity-60 text-zen-ink dark:text-zen-white z-10"
+            >
+              <path
+                fill="currentColor"
+                d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
+                style={{
+                  stroke: "currentColor",
+                  strokeWidth: "4",
+                  strokeLinecap: "round",
+                  strokeDasharray: "300 100",
+                  fill: "none",
+                  filter: "url(#rough-edge)", 
+                }}
+              />
+            </svg>
+
+            <div className="w-52 h-52 md:w-64 md:h-64 rounded-full overflow-hidden relative z-20">
+              <img
+                src={`${import.meta.env.BASE_URL}/me.jpeg`}
+                alt="Ryan"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          <h1 className="text-5xl md:text-6xl font-zen-serif mb-2 tracking-widest text-zen-ink dark:text-zen-white">
+            Ryan
+          </h1>
+          <div className="w-16 h-1 bg-zen-red mx-auto mb-6 rounded-sm opacity-80"></div>
+          <p className="text-lg md:text-xl font-zen-mincho text-zen-stone dark:text-zen-sage tracking-[0.2em] uppercase">
+            Frontend Engineer
+          </p>
+        </motion.div>
+      </aside>
+
+      <main className="w-full md:w-7/12 lg:w-2/3 h-auto md:h-full md:overflow-y-auto p-6 md:p-16 relative scroll-smooth bg-zen-cream dark:bg-zen-charcoal/50">
+        <div
+          className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 mix-blend-multiply dark:mix-blend-overlay"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+          }}
+        ></div>
+
+        <div className="max-w-3xl mx-auto relative z-10">
+          <div className="flex items-center gap-6 mb-16">
+            <h2 className="text-4xl font-zen-serif text-zen-ink dark:text-zen-white tracking-widest">
+              Experience
+            </h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-zen-ink/50 to-transparent dark:from-zen-white/50"></div>
+          </div>
+
+          <div className="relative border-l border-zen-ink/20 dark:border-zen-white/20 ml-3 md:ml-6 space-y-12 pb-24">
+            {jobHistory.map((job, index) => (
+              <JobCard key={index} job={job} index={index} dark={dark} />
+            ))}
+          </div>
+
+          <Footer />
+        </div>
+      </main>
     </div>
   );
 }
