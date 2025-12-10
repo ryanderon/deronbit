@@ -1,18 +1,83 @@
-import { useEffect, useState } from "react";
-// eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 import "./index.css";
 import { jobHistory } from "./jobHistory";
 import { JobCard } from "./JobCard";
 import { Footer } from "./Footer";
+
+gsap.registerPlugin(useGSAP);
 
 const isDarkPreferred = window.matchMedia?.(
   "(prefers-color-scheme: dark)"
 ).matches;
 
 function App() {
+  const container = useRef();
   const [dark, setDark] = useState(isDarkPreferred);
-  const [isProfileHovered, setIsProfileHovered] = useState(false);
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline();
+      tl.from("#hero-content", {
+        scale: 0.9,
+        opacity: 0,
+        filter: "blur(10px)",
+        duration: 1.5,
+        ease: "power3.out",
+      }).from(
+        ["#hero-title", "#hero-separator", "#hero-subtitle"],
+        {
+          opacity: 0,
+          y: 20,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power3.out",
+        },
+        "-=1"
+      );
+
+      // Ink drop animations
+      gsap.utils.toArray(".ink-drop").forEach((drop) => {
+        gsap.fromTo(
+          drop,
+          {
+            scale: 0,
+            x: `${gsap.utils.random(0, 100)}%`,
+            y: `${gsap.utils.random(0, 100)}%`,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            opacity: gsap.utils.random(0.1, 0.4),
+            duration: gsap.utils.random(10, 15),
+            repeat: -1,
+            yoyo: true,
+            delay: gsap.utils.random(0, 5),
+            ease: "power1.inOut",
+            width: gsap.utils.random(200, 500),
+            height: gsap.utils.random(200, 500),
+          }
+        );
+      });
+
+      // Profile image hover animation
+      const profileImage = document.querySelector("#hero-content");
+      const hoverCircle = document.querySelector("#profile-hover-circle");
+
+      const hoverTl = gsap.timeline({ paused: true });
+      hoverTl.to(hoverCircle, {
+        opacity: 0.5,
+        scale: 1.1,
+        duration: 0.6,
+        ease: "power3.out",
+      });
+
+      profileImage.addEventListener("mouseenter", () => hoverTl.play());
+      profileImage.addEventListener("mouseleave", () => hoverTl.reverse());
+    },
+    { scope: container }
+  );
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
@@ -21,7 +86,7 @@ function App() {
   const toggleTheme = () => setDark((d) => !d);
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen md:h-screen bg-zen-white dark:bg-zen-ink transition-colors duration-800 md:overflow-hidden">
+    <div ref={container} className="flex flex-col md:flex-row min-h-screen md:h-screen bg-zen-white dark:bg-zen-ink transition-colors duration-800 md:overflow-hidden">
       <svg style={{ position: "absolute", width: 0, height: 0 }}>
         <filter id="rough-edge">
           <feTurbulence
@@ -37,27 +102,9 @@ function App() {
       <aside className="w-full md:w-5/12 lg:w-1/3 min-h-screen md:h-full relative z-10 flex flex-col justify-center items-center p-12 md:p-8 text-center transition-colors duration-800 bg-zen-white dark:bg-zen-ink text-zen-ink dark:text-zen-white border-b md:border-b-0 md:border-r border-zen-stone/20 shadow-2xl overflow-hidden shrink-0">
         <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-40 dark:opacity-30">
           {[...Array(5)].map((_, i) => (
-            <motion.div
+            <div
               key={i}
-              className="absolute rounded-full bg-zen-ink dark:bg-zen-white blur-xl"
-              initial={{
-                width: 0,
-                height: 0,
-                x: Math.random() * 100 + "%",
-                y: Math.random() * 100 + "%",
-                opacity: 0,
-              }}
-              animate={{
-                width: [0, 200 + Math.random() * 300],
-                height: [0, 200 + Math.random() * 300],
-                opacity: [0, 0.4, 0],
-              }}
-              transition={{
-                duration: 10 + Math.random() * 10,
-                repeat: Infinity,
-                delay: Math.random() * 5,
-                ease: "easeInOut",
-              }}
+              className="ink-drop absolute rounded-full bg-zen-ink dark:bg-zen-white blur-xl"
             />
           ))}
         </div>
@@ -68,28 +115,17 @@ function App() {
           aria-label="Toggle theme"
         >
           {dark ? (
-            <span className="text-xl">○</span> 
+            <span className="text-xl">○</span>
           ) : (
             <span className="text-xl">●</span>
           )}
         </button>
 
-        <motion.div
-          className="mb-8 relative cursor-pointer"
-          initial={{ scale: 0.9, opacity: 0, filter: "blur(10px)" }}
-          animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          onHoverStart={() => setIsProfileHovered(true)}
-          onHoverEnd={() => setIsProfileHovered(false)}
-        >
+        <div id="hero-content" className="mb-8 relative cursor-pointer">
           <div className="w-64 h-64 md:w-80 md:h-80 relative z-10 flex items-center justify-center">
-            <motion.div
-              animate={{
-                opacity: isProfileHovered ? 0.5 : 0,
-                scale: isProfileHovered ? 1.1 : 0.8,
-              }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="absolute inset-0 bg-zen-red rounded-full blur-2xl z-0"
+            <div
+              id="profile-hover-circle"
+              className="absolute inset-0 bg-zen-red rounded-full blur-2xl z-0 opacity-0 scale-90"
             />
 
             <svg
@@ -105,7 +141,7 @@ function App() {
                   strokeLinecap: "round",
                   strokeDasharray: "300 100",
                   fill: "none",
-                  filter: "url(#rough-edge)", 
+                  filter: "url(#rough-edge)",
                 }}
               />
             </svg>
@@ -118,21 +154,26 @@ function App() {
               />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-zen-serif mb-2 tracking-widest text-zen-ink dark:text-zen-white">
+        <div>
+          <h1
+            id="hero-title"
+            className="text-5xl md:text-6xl font-zen-serif mb-2 tracking-widest text-zen-ink dark:text-zen-white"
+          >
             Ryan
           </h1>
-          <div className="w-16 h-1 bg-zen-red mx-auto mb-6 rounded-sm opacity-80"></div>
-          <p className="text-lg md:text-xl font-zen-mincho text-zen-stone dark:text-zen-sage tracking-[0.2em] uppercase">
+          <div
+            id="hero-separator"
+            className="w-16 h-1 bg-zen-red mx-auto mb-6 rounded-sm opacity-80"
+          ></div>
+          <p
+            id="hero-subtitle"
+            className="text-lg md:text-xl font-zen-mincho text-zen-stone dark:text-zen-sage tracking-[0.2em] uppercase"
+          >
             Frontend Engineer
           </p>
-        </motion.div>
+        </div>
       </aside>
 
       <main className="w-full md:w-7/12 lg:w-2/3 h-auto md:h-full md:overflow-y-auto p-6 md:p-16 relative scroll-smooth bg-zen-cream dark:bg-zen-charcoal/50">
@@ -153,7 +194,7 @@ function App() {
 
           <div className="relative border-l border-zen-ink/20 dark:border-zen-white/20 ml-3 md:ml-6 space-y-12 pb-24">
             {jobHistory.map((job, index) => (
-              <JobCard key={index} job={job} index={index} dark={dark} />
+              <JobCard key={index} job={job} index={index} />
             ))}
           </div>
 
