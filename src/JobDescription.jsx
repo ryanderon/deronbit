@@ -1,44 +1,21 @@
-import { useRef } from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(useGSAP);
-
 export const JobDescription = ({ descriptions }) => {
-  const container = useRef();
-
-  useGSAP(() => {
-    gsap.fromTo(
-      ".description-item",
-      {
-        opacity: 0,
-        filter: "blur(4px)",
-      },
-      {
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out",
-      }
-    );
-  }, { scope: container });
-
-
   return (
-  <div ref={container} className="space-y-6">
-    {descriptions.map((desc, i) => (
-      <div
-        key={i}
-        className="description-item flex gap-4 items-start group"
-      >
-        <span className="text-2xl mt-[-6px] flex-shrink-0 text-zen-ink dark:text-zen-white opacity-60 group-hover:opacity-100 transition-opacity duration-300">
-          •
-        </span>
-        <p className="text-base leading-loose font-zen-mincho tracking-wide text-zen-ink/80 dark:text-zen-white/80">
-          {desc}
-        </p>
-      </div>
-    ))}
-  </div>
-)};
+    <ul className="space-y-4">
+      {descriptions.map((desc, i) => (
+        <li
+          key={i}
+          className="flex gap-3 items-start text-sm md:text-base leading-relaxed"
+        >
+          <span 
+            className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" 
+            aria-hidden="true" 
+          />
+          <span className="font-mono text-text">
+            {desc}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+};
+

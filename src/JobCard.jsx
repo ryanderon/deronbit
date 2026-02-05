@@ -1,84 +1,77 @@
-import { useRef } from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { JobDescription } from "./JobDescription";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-export const JobCard = ({ job, index }) => {
-  const cardRef = useRef(null);
-
-  useGSAP(
-    () => {
-      gsap.from(cardRef.current, {
-        opacity: 0,
-        x: -20,
-        duration: 0.8,
-        delay: index * 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: cardRef.current,
-          start: "top 90%",
-          once: true,
-        },
-      });
-    },
-    { scope: cardRef }
-  );
-
+export const JobMilestone = ({ job, onClick }) => {
   return (
-    <div ref={cardRef} className="relative pl-6 md:pl-16 group/card-container">
-      <div className="absolute left-[-9px] top-1 w-5 h-5 z-10 transition-transform duration-500 group-hover/card-container:scale-125">
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full fill-zen-ink dark:fill-zen-white opacity-80"
-        >
-          <path d="M50 0 C20 0 0 20 0 50 C0 80 20 100 50 100 C80 100 100 80 100 50 C100 20 80 0 50 0 Z M50 20 C65 20 75 30 75 45 C75 60 65 70 50 70 C35 70 25 60 25 45 C25 30 35 20 50 20 Z" />
-        </svg>
-      </div>
+    <div className="relative">
+      <button onClick={onClick} className="relative w-full text-left group focus:outline-none">
+        <div className="flex flex-col sm:flex-row sm:gap-6">
+          <div className="flex items-center gap-3 sm:block sm:flex-shrink-0 sm:w-[140px] md:w-[160px] mb-2 sm:mb-0">
+            <span className="text-xs sm:text-sm font-mono text-primary-adaptive-60 group-hover:text-cyber-cyan group-hover:scale-105 transition-all origin-left whitespace-nowrap">
+              {job.year}
+            </span>
 
-      <span className="text-sm font-zen-mincho tracking-[0.2em] uppercase mb-3 block text-zen-stone dark:text-zen-sage">
-        {job.year}
-      </span>
+            <div className="flex-1 h-px bg-primary-adaptive-20 group-hover:bg-primary-adaptive transition-colors sm:hidden" />
+          </div>
 
-      <details className="group/card">
-        <summary className="cursor-pointer relative list-none">
-          <div className="flex justify-between items-start gap-4">
-            <div>
-              <h3 className="text-2xl font-zen-serif font-bold mb-2 tracking-wide text-zen-ink dark:text-zen-white group-hover/card:text-zen-stone transition-colors duration-300">
-                {job.company}
-              </h3>
-              <p className="text-base font-zen-mincho text-zen-stone dark:text-zen-sage italic">
-                {job.role}
-              </p>
-            </div>
-            <div className="mt-2 opacity-40 text-zen-ink dark:text-zen-white transition-transform duration-400 group-open/card:rotate-180">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                />
-              </svg>
+          <div className="flex-1 relative pb-8 sm:pb-10">
+            <div className="cyber-card-border sm:-ml-3 p-3 sm:p-4 bg-dark-bg/50 group-hover:bg-primary-adaptive-5 transition-all duration-200 group-hover:translate-x-1 group-hover:shadow-cyber">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <h3 className="text-base sm:text-lg md:text-xl font-cyber font-bold text-text group-hover:text-primary-adaptive transition-colors leading-tight">
+                    {job.company}
+                  </h3>
+                  <p className="text-sm font-mono text-text/50 group-hover:text-text/70 mt-1 transition-colors">
+                    {job.role}
+                  </p>
+                </div>
+
+                <span className="flex-shrink-0 text-primary-adaptive-30 group-hover:text-primary-adaptive group-hover:translate-x-1 transition-all mt-1">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
-          <div className="absolute -bottom-2 left-0 w-0 h-0.5 bg-zen-ink/20 dark:bg-zen-white/20 group-hover/card:w-full transition-all duration-700 ease-out"></div>
-        </summary>
-
-        <div className="overflow-hidden transition-all duration-500 ease-in-out">
-            <div className="border-t border-zen-ink/10 dark:border-zen-white/10 pt-6 mt-6 pl-2 border-l-2 border-l-zen-red/50">
-              <JobDescription descriptions={job.description} index={index} />
-            </div>
         </div>
-      </details>
+      </button>
     </div>
+  );
+};
+
+export const JobDetailContent = ({ job }) => {
+  if (!job) return null;
+
+  return (
+    <>
+      <div className="flex-shrink-0 p-6 md:p-8 border-b border-primary-adaptive-10">
+        <span className="text-sm font-mono text-primary-adaptive-60 block mb-2">
+          {job.year}
+        </span>
+        <h2
+          className="text-2xl md:text-3xl font-cyber font-bold tracking-wide text-primary-adaptive glitch pr-10"
+          data-text={job.company}
+        >
+          {job.company}
+        </h2>
+        <p className="text-base md:text-lg font-mono text-text/70 mt-1">
+          {job.role}
+        </p>
+      </div>
+
+      <div className="flex-1 overflow-y-auto p-6 md:p-8 scrollbar-thin">
+        <JobDescription descriptions={job.description} />
+      </div>
+    </>
   );
 };

@@ -1,80 +1,81 @@
 export const jobHistory = [
   {
-    year: "Oct 2024 - Present",
+    year: "Sept 2023 - Present",
     role: "Software Engineer",
     company: "PT Siloam International Hospitals Tbk.",
     palette: {
       light: {
         bg: "#fff9fb",
         text: "#5d4037",
-        accent: "#d81b60", // Deep Pink
+        accent: "#d81b60",
       },
       dark: {
         bg: "#3e2723",
         text: "#fce4ec",
-        accent: "#ff80ab", // Light Pink
+        accent: "#ff80ab",
       },
     },
     description: [
-      "Developed a dedicated page for SYLVIA (Siloam AI), an AI-powered assistant designed to help users schedule hospital appointments seamlessly.",
-      "Contributed to a major web revamp project.",
-      "Created several campaign landing pages, ensuring they are responsive, visually appealing, and aligned with branding guidelines.",
-      "Refactored legacy codebases to improve maintainability, performance, and scalability.",
-      "Conducted in-depth research on microsites, comparing technologies like Next.js and Nuxt.js to identify the most suitable frameworks for future projects.",
-      "Designed and implemented frontend architecture for an upcoming project using Vue 3 (Typescript), Vite, Pinia, TailwindCSS, and Atomic Design, ensuring scalability and maintainability.",
-      "Built several APIs to support CMS website.",
+      "Developed a dedicated page for Siloam AI, an AI assistant that enables users to schedule hospital appointments seamlessly.",
+      "Designed and implemented scalable frontend architecture using Vue 3, Vite, Pinia, TailwindCSS, and Atomic Design, ensuring long-term maintainability.",
+      "Conducted performance research and optimization on siloamhospitals.com, improving page load speed and overall user engagement.",
+      "Reviewed and refactored legacy codebase, enhancing readability, maintainability, and application performance.",
+      "Developed high conversion campaign landing pages for national health awareness programs, improving engagement and page performance.",
+      "Built responsive and visually consistent campaign pages aligned with corporate branding guidelines.",
+      "Created a proof-of-concept frontend architecture using Next.js, TailwindCSS, and Atomic Design to explore best practices and performance optimization strategies.",
     ],
   },
   {
-    year: "Mar 2024 - Present",
-    role: "Frontend Engineer",
+    year: "Dec 2025 - Jan 2026",
+    role: "Frontend Engineer (Freelance)",
+    company: "Sign World",
+    palette: {
+      light: {
+        bg: "#fff9fb",
+        text: "#5d4037",
+        accent: "#d81b60",
+      },
+      dark: {
+        bg: "#3e2723",
+        text: "#fce4ec",
+        accent: "#ff80ab",
+      },
+    },
+    description: [
+      "Developed a responsive marketing landing page using React, TailwindCSS, and GSAP to deliver smooth animations and engaging user experience.",
+      "Implemented SEO-friendly structure, optimized page performance, and ensured fast load times across devices.",
+      "Handled deployment process and domain setup, ensuring production readiness and stability.",
+      "Configured and submitted website to Google Search Console, enabling indexing, sitemap tracking, and search performance monitoring.",
+      "Collaborated directly with client to translate business requirements into functional and user focused UI.",
+    ],
+  },
+  {
+    year: "Mar 2024 - Mar 2025",
+    role: "Frontend Engineer (Freelance)",
     company: "Yesplis Indonesia",
     palette: {
       light: {
         bg: "#fff0f5",
         text: "#5d4037",
-        accent: "#8d6e63", // Warm Brown
+        accent: "#8d6e63",
       },
       dark: {
         bg: "#4e342e",
         text: "#fce4ec",
-        accent: "#e6a4b4", // Dusty Pink
+        accent: "#e6a4b4",
       },
     },
     description: [
-      "Revamped the store website from scratch, building a modern and user-friendly platform for ticket transactions, including purchasing, viewing transaction history, and managing user interactions.",
-      "Redesigned the admin portal from the ground up, enabling seamless configuration and management of all ticketing options, event settings, and system parameters.",
-      "Contributed to the development of new features, collaborating with the team to enhance user experience and platform functionality.",
-      "Developed a seat management system for multiple events, ensuring accurate seat selection, real-time availability updates, and optimized event capacity handling.",
-      "Participated in deploying and testing new features in a staging environment, ensuring quality assurance before release.",
-    ],
-  },
-  {
-    year: "Sept 2023 - Oct 2024",
-    role: "Software Engineer",
-    company: "PT Bithealth Teknologi Pintar",
-    palette: {
-      light: {
-        bg: "#fff9fb",
-        text: "#5d4037",
-        accent: "#e6a4b4", // Dusty Pink
-      },
-      dark: {
-        bg: "#3e2723",
-        text: "#fce4ec",
-        accent: "#f48fb1",
-      },
-    },
-    description: [
-      "Revamped the Siloam Hospitals main website, improving usability, design, and performance to enhance patient experience.",
-      "Conducted research and optimized the performance of siloamhospitals.com, identifying and implementing improvements for faster load times and better user engagement.",
-      "Reviewed and refactored legacy code, improving maintainability, readability, and performance across the platform.",
-      "Developed campaign landing pages for various initiatives, such as health awareness programs (e.g., cancer awareness, running events), ensuring an engaging and conversion-driven user experience.",
+      "Built a modern and user-friendly ticketing platform, enabling users to purchase tickets, view transaction history, and manage accounts.",
+      "Developed the admin portal from scratch, allowing full configuration of events, ticket types, seat mapping, and system parameters.",
+      "Collaborated with the product and development team to ideate and implement new features, enhancing overall platform usability.",
+      "Implemented a seat management system supporting real-time availability updates and optimized event capacity handling.",
+      "Participated in deployment and staging testing processes, ensuring feature stability and quality prior to production release.",
     ],
   },
   {
     year: "Mar 2023 - Sept 2023",
-    role: "Frontend Engineer",
+    role: "Frontend Engineer (Contract)",
     company: "PT Namdeska Solution",
     palette: {
       light: {
@@ -92,7 +93,8 @@ export const jobHistory = [
       "Translated designs into responsive webpages, ensuring a seamless user experience.",
       "Contributed to API contract documentation, defining clear standards for frontend-backend integration.",
       "Integrated webpages with APIs, enabling efficient data exchange and interactivity.",
-      "Gained hands-on experience collaborating with backend developers to ensure smooth development processes.",
+      "Refactored legacy code, improving performance, maintainability, and scalability.",
+      "Gained hands-on experience collaborating with backend developers and QA teams to ensure smooth development and testing processes.",
       "Developed reusable components and functions, streamlining development and improving code reusability.",
       "Maintained and optimized the existing website, ensuring stability, performance, and security.",
     ],

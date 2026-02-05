@@ -1,206 +1,235 @@
 import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 import "./index.css";
 import { jobHistory } from "./jobHistory";
-import { JobCard } from "./JobCard";
+import { JobMilestone, JobDetailContent } from "./JobCard";
+import { Modal } from "./Modal";
 import { Footer } from "./Footer";
 
-gsap.registerPlugin(useGSAP);
-
-const isDarkPreferred = window.matchMedia?.(
-  "(prefers-color-scheme: dark)"
-).matches;
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 function App() {
   const container = useRef();
-  const [dark, setDark] = useState(isDarkPreferred);
+  const [dark, setDark] = useState(true);
+  const [selectedJob, setSelectedJob] = useState(null);
 
   useGSAP(
     () => {
       const tl = gsap.timeline();
-      tl.from("#hero-content", {
-        scale: 0.9,
-        opacity: 0,
-        filter: "blur(10px)",
+      tl.to("#preloader-bar", {
+        width: "100%",
         duration: 1.5,
-        ease: "power3.out",
-      }).from(
-        ["#hero-title", "#hero-separator", "#hero-subtitle"],
-        {
+        ease: "power2.out",
+      })
+        .to("#preloader", {
           opacity: 0,
-          y: 20,
           duration: 1,
-          stagger: 0.2,
-          ease: "power3.out",
-        },
-        "-=1"
-      );
-
-      // Ink drop animations
-      gsap.utils.toArray(".ink-drop").forEach((drop) => {
-        gsap.fromTo(
-          drop,
-          {
-            scale: 0,
-            x: `${gsap.utils.random(0, 100)}%`,
-            y: `${gsap.utils.random(0, 100)}%`,
-            opacity: 0,
+          onComplete: () => {
+            document.querySelector("#preloader").style.display = "none";
           },
+        })
+        .to("#theme-toggle-btn", {
+          opacity: 1,
+          duration: 0.5,
+        })
+        .from(
+          "#hero-title .char",
           {
-            scale: 1,
-            opacity: gsap.utils.random(0.1, 0.4),
-            duration: gsap.utils.random(10, 15),
-            repeat: -1,
-            yoyo: true,
-            delay: gsap.utils.random(0, 5),
-            ease: "power1.inOut",
-            width: gsap.utils.random(200, 500),
-            height: gsap.utils.random(200, 500),
-          }
+            y: 100,
+            opacity: 0,
+            stagger: 0.05,
+            duration: 1,
+            ease: "power4.out",
+          },
+          "-=0.5"
+        )
+        .from(
+          "#hero-subtitle",
+          {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+          },
+          "-=0.5"
+        )
+        .from(
+          ".cyber-decoration",
+          {
+            scaleY: 0,
+            duration: 0.8,
+            ease: "power3.inOut",
+          },
+          "-=0.8"
         );
+
+      const text = new SplitType("#hero-title", { types: "chars" });
+
+      gsap.utils.toArray(".cyber-card").forEach((card, i) => {
+        gsap.from(card, {
+          y: 30,
+          opacity: 0,
+          duration: 0.6,
+          delay: i * 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom-=100",
+            toggleActions: "play none none reverse",
+          },
+        });
       });
 
-      // Profile image hover animation
-      const profileImage = document.querySelector("#hero-content");
-      const hoverCircle = document.querySelector("#profile-hover-circle");
-
-      const hoverTl = gsap.timeline({ paused: true });
-      hoverTl.to(hoverCircle, {
-        opacity: 0.5,
-        scale: 1.1,
-        duration: 0.6,
-        ease: "power3.out",
+      const profile = document.querySelector(".profile-img-container");
+      profile.addEventListener("mouseenter", () => {
+        gsap.to(profile, { x: -5, duration: 0.1, yoyo: true, repeat: 5 });
       });
 
-      profileImage.addEventListener("mouseenter", () => hoverTl.play());
-      profileImage.addEventListener("mouseleave", () => hoverTl.reverse());
+      return () => {
+        text.revert();
+      };
     },
     { scope: container }
   );
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
+    document.body.classList.toggle("dark", dark);
   }, [dark]);
 
   const toggleTheme = () => setDark((d) => !d);
 
   return (
-    <div ref={container} className="flex flex-col md:flex-row min-h-screen md:h-screen bg-zen-white dark:bg-zen-ink transition-colors duration-800 md:overflow-hidden">
-      <svg style={{ position: "absolute", width: 0, height: 0 }}>
-        <filter id="rough-edge">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.05"
-            numOctaves="2"
-            result="noise"
-          />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" />
-        </filter>
-      </svg>
-
-      <aside className="w-full md:w-5/12 lg:w-1/3 min-h-screen md:h-full relative z-10 flex flex-col justify-center items-center p-12 md:p-8 text-center transition-colors duration-800 bg-zen-white dark:bg-zen-ink text-zen-ink dark:text-zen-white border-b md:border-b-0 md:border-r border-zen-stone/20 shadow-2xl overflow-hidden shrink-0">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-40 dark:opacity-30">
-          {[...Array(5)].map((_, i) => (
+    <div
+      ref={container}
+      className="text-cyber-text min-h-screen font-mono selection:bg-cyber-blue selection:text-black overflow-x-hidden"
+    >
+      <div
+        id="preloader"
+        className="fixed inset-0 z-50 bg-black flex items-center justify-center"
+      >
+        <div className="w-64 text-center">
+          <div
+            className="text-cyber-blue font-cyber text-4xl glitch"
+            data-text="INITIALIZING..."
+          >
+            INITIALIZING...
+          </div>
+          <div className="h-1 w-full bg-cyber-blue/20 mt-4">
             <div
-              key={i}
-              className="ink-drop absolute rounded-full bg-zen-ink dark:bg-zen-white blur-xl"
-            />
-          ))}
+              id="preloader-bar"
+              className="h-1 bg-cyber-blue"
+              style={{ width: "0%" }}
+            ></div>
+          </div>
         </div>
+      </div>
 
-        <button
-          onClick={toggleTheme}
-          className="absolute top-6 left-6 p-3 rounded-full hover:bg-zen-stone/10 transition-colors z-50 text-zen-stone dark:text-zen-sage"
-          aria-label="Toggle theme"
-        >
-          {dark ? (
-            <span className="text-xl">○</span>
-          ) : (
-            <span className="text-xl">●</span>
-          )}
-        </button>
-
-        <div id="hero-content" className="mb-8 relative cursor-pointer">
-          <div className="w-64 h-64 md:w-80 md:h-80 relative z-10 flex items-center justify-center">
-            <div
-              id="profile-hover-circle"
-              className="absolute inset-0 bg-zen-red rounded-full blur-2xl z-0 opacity-0 scale-90"
+      <button
+        id="theme-toggle-btn"
+        onClick={toggleTheme}
+        className="fixed top-6 right-6 z-50 cyber-btn text-sm p-2 opacity-0"
+        aria-label="Toggle theme"
+      >
+        {dark ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
             />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        )}
+      </button>
 
-            <svg
-              viewBox="0 0 200 200"
-              className="absolute inset-0 w-full h-full animate-spin-slow-reverse opacity-80 dark:opacity-60 text-zen-ink dark:text-zen-white z-10"
-            >
-              <path
-                fill="currentColor"
-                d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
-                style={{
-                  stroke: "currentColor",
-                  strokeWidth: "4",
-                  strokeLinecap: "round",
-                  strokeDasharray: "300 100",
-                  fill: "none",
-                  filter: "url(#rough-edge)",
-                }}
-              />
-            </svg>
+      <section className="w-full h-screen relative flex flex-col justify-center items-center text-center bg-cyber-black border-b-2 border-cyber-blue/20 overflow-hidden">
+        <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none"></div>
 
-            <div className="w-52 h-52 md:w-64 md:h-64 rounded-full overflow-hidden relative z-20">
-              <img
-                src={`${import.meta.env.BASE_URL}/me.jpeg`}
-                alt="Ryan"
-                className="w-full h-full object-cover"
-              />
-            </div>
+        <div className="relative z-10 mb-8 profile-img-container group">
+          <div className="w-64 h-64 relative">
+            <div className="absolute inset-0 border-2 border-cyber-blue rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
+            <div className="absolute inset-0 border-2 border-cyber-accent rounded-full opacity-30 scale-95 group-hover:scale-105 transition-transform duration-500 delay-75"></div>
+            <img
+              src={`${import.meta.env.BASE_URL}/me.jpeg`}
+              alt="Ryan"
+              className="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-500"
+            />
           </div>
         </div>
 
-        <div>
+        <div className="relative z-10">
           <h1
             id="hero-title"
-            className="text-5xl md:text-6xl font-zen-serif mb-2 tracking-widest text-zen-ink dark:text-zen-white"
+            className="text-6xl md:text-8xl font-cyber mb-4 glitch"
+            data-text="RYAN"
           >
-            Ryan
+            RYAN
           </h1>
-          <div
-            id="hero-separator"
-            className="w-16 h-1 bg-zen-red mx-auto mb-6 rounded-sm opacity-80"
-          ></div>
+          <div className="cyber-decoration w-24 h-1 bg-cyber-accent mx-auto mb-6"></div>
           <p
             id="hero-subtitle"
-            className="text-lg md:text-xl font-zen-mincho text-zen-stone dark:text-zen-sage tracking-[0.2em] uppercase"
+            className="text-xl md:text-2xl font-mono tracking-[0.3em] uppercase"
           >
             Frontend Engineer
           </p>
         </div>
-      </aside>
 
-      <main className="w-full md:w-7/12 lg:w-2/3 h-auto md:h-full md:overflow-y-auto p-6 md:p-16 relative scroll-smooth bg-zen-cream dark:bg-zen-charcoal/50">
-        <div
-          className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 mix-blend-multiply dark:mix-blend-overlay"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
-          }}
-        ></div>
+        <div className="absolute bottom-10 animate-bounce text-cyber-blue/50">
+          SCROLL TO EXPLORE
+        </div>
+      </section>
 
-        <div className="max-w-3xl mx-auto relative z-10">
-          <div className="flex items-center gap-6 mb-16">
-            <h2 className="text-4xl font-zen-serif text-zen-ink dark:text-zen-white tracking-widest">
+      <main
+        id="experience-section"
+        className="w-full min-h-screen bg-cyber-dark relative py-20 md:py-28"
+      >
+        <div className="max-w-2xl mx-auto px-4 md:px-6">
+          <header className="mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-cyber tracking-wide text-cyber-text">
               Experience
             </h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-zen-ink/50 to-transparent dark:from-zen-white/50"></div>
-          </div>
+          </header>
 
-          <div className="relative border-l border-zen-ink/20 dark:border-zen-white/20 ml-3 md:ml-6 space-y-12 pb-24">
+          <div>
             {jobHistory.map((job, index) => (
-              <JobCard key={index} job={job} index={index} />
+              <JobMilestone
+                key={index}
+                job={job}
+                onClick={() => setSelectedJob(job)}
+              />
             ))}
           </div>
-
-          <Footer />
         </div>
       </main>
+
+      <Modal isOpen={!!selectedJob} onClose={() => setSelectedJob(null)}>
+        <JobDetailContent job={selectedJob} />
+      </Modal>
+
+      <Footer />
     </div>
   );
 }
