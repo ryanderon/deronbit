@@ -1,31 +1,54 @@
 <!DOCTYPE html>
-<!-- 
-  deronbit
+<!--
+  deronbit — field notes
   made by: ryanderon
 -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/deronbit/zen-favicon.svg" />
-    <link rel="preload" href="https://assets.codepen.io/605876/Blender-Pro-Bold.otf" as="font" type="font/otf" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+    <title>Ryan Anan Saputra Sinaga — Field Notes</title>
+    <meta
+      name="description"
+      content="Field notes of Ryan Anan Saputra Sinaga — frontend engineer with 5+ years building scalable, high performance web applications in the Vue and React ecosystems."
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
+    <meta name="author" content="Ryan Anan Saputra Sinaga" />
+    <!-- kept in sync with the active theme by useTheme() -->
+    <meta name="theme-color" content="#1c1a16" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Ryan Anan Saputra Sinaga — Field Notes" />
+    <meta
+      property="og:description"
+      content="A notebook of the things I have shipped. Frontend engineer, 5+ years, Vue & React."
     />
+
+    <link rel="icon" type="image/svg+xml" href="/deronbit/notebook.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Courier+Prime:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ryan - Frontend Engineer</title>
-    <script type="module" crossorigin src="/deronbit/assets/index-DEcY2cjz.js"></script>
-    <link rel="stylesheet" crossorigin href="/deronbit/assets/index-BwNrQqvU.css">
+    <script>
+      // Paint the right paper before first frame so the theme never flashes.
+      (function () {
+        var theme = "dark";
+        try {
+          var saved = localStorage.getItem("fn-theme");
+          if (saved === "light" || saved === "dark") theme = saved;
+          else if (window.matchMedia("(prefers-color-scheme: light)").matches) theme = "light";
+        } catch (e) {
+          /* private mode — fall back to dark */
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <script type="module" crossorigin src="/deronbit/assets/index-DCz4MfR5.js"></script>
+    <link rel="stylesheet" crossorigin href="/deronbit/assets/index-BG4cy6jj.css">
   </head>
   <body>
     <div id="root"></div>
